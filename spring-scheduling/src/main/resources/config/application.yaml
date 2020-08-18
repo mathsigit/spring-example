@@ -1,0 +1,13 @@
+cron:
+  expression: 50 41 21 * * ?
+
+fixedRate:
+  in:
+    milliseconds: 1000
+
+fixedDelay:
+  in:
+    milliseconds: 5000
+
+task:
+  enabled: false
