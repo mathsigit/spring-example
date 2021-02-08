@@ -1,0 +1,43 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id "com.diffplug.gradle.spotless" version "3.24.2"
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+    group = 'com.stana.example'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '1.8'
+
+    test {
+        maxParallelForks = 1
+        minHeapSize = "256m"
+        maxHeapSize = "4096m"
+        testLogging {
+            events = ["passed", "skipped", "failed"]
+        }
+    }
+
+    apply plugin: "com.diffplug.gradle.spotless"
+    spotless {
+        java {
+            googleJavaFormat()
+            removeUnusedImports()
+        }
+    }
+
+    task copyToLib(type: Copy) {
+        into "lib"
+        from configurations.runtime
+    }
+}
